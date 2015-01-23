@@ -1,0 +1,9 @@
+{
+  "id": "playground-server",
+  "kind": "Service",
+  "apiVersion": "v1beta1",
+  "port": 8081,
+  "containerPort": 8081,
+  "selector": { "name": "playground-server" },
+  "labels": { "proxy": "true", "websockets": "true" },
+}

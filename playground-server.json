@@ -1,0 +1,47 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1beta1",
+  "id": "playground-server",
+  "desiredState": {
+    "manifest": {
+      "volumes": [{
+        "name": "docker-socket",
+        "source": {
+          "hostDir": {
+	    "path": "/var/run/docker.sock",
+	  },
+        },
+      }, {
+        "name": "tmp",
+        "source": {
+	  "hostDir": {
+            "path": "/tmp",
+          },
+        },
+      }],
+      "version": "v1beta1",
+      "id": "playground-server",
+      "containers": [{
+        "name": "playground-server",
+        "image": "myodc/playground-server",
+        "imagePullPolicy": "PullAlways",
+        "ports": [{"containerPort": 8081, "hostPort": 8081}],
+        "env": [
+          {"name": "PLAYGROUND_KUBE_HOST", "value": "https://10.0.0.1"},
+          {"name": "PLAYGROUND_KUBE_USER", "value": "admin"},
+          {"name": "PLAYGROUND_KUBE_PASS", "value": "admin"},
+        ],
+        "volumeMounts": [{
+          "name": "docker-socket",
+          "mountPath": "/var/run/docker.sock",
+        }, {
+          "name": "tmp",
+          "mountPath": "/tmp",
+        }]
+      }]
+    }
+  },
+  "labels": {
+    "name": "playground-server",
+  }
+}
